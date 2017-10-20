@@ -40,18 +40,6 @@ class WeixinArticle(Base):
     # weixin_read = Column(Integer)
     # weixin_comment = Column(Integer) 
 
-#coding=utf8
-
-
-from sqlalchemy import Column
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy import Text
-from sqlalchemy.dialects.mysql import LONGTEXT
-from sqlalchemy.ext.declarative import declarative_base
-
-Base = declarative_base()
-
 class WeixinTask(Base):
     __tablename__ = 'wexin_task'
 
