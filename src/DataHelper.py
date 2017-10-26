@@ -5,20 +5,30 @@ from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 
 from models import *
+import json
 
 USERNAME = 'fangzhong'
 PASSWORD = 'vis123'
-SERVER = '0.0.0.0:3306'
+SERVER = '145.239.136.200:3306'
 
+class LocalData():
+    def __init__(self):
+        with open('weibo_user.json', 'r') as f:
+            self.weibo_user = json.load(f)
+    
+    def query(self, user):
+        return filter(lambda x:x['url'] == user, self.weibo_user)
+
+local = LocalData()
 
 
 class DataHelper():
-    def __init__():
-        engine create_engine('mysql+pymysql://' + username + ':' + PASSWORD + '@' + SERVER + '/vis')
+    def __init__(self):
+        engine = create_engine('mysql+pymysql://' + USERNAME + ':' + PASSWORD + '@' + SERVER + '/vis')
         DBSession = sessionmaker(bind=engine)
         self.session = DBSession()
 
-    def QueryZhihuInfoByTime(startDateTime, endDateTime):
+    def QueryZhihuInfoByTime(self, startDateTime, endDateTime):
         ret = []
         start = startDateTime.timestamp()
         end = startDateTime.timestamp()
@@ -35,19 +45,24 @@ class DataHelper():
             )
         return ret
 
-    def QueryWeiboInfoByTime(startDateTime, endDateTime)
+    def QueryWeiboInfoByTime(self, startDateTime, endDateTime):
         ret = []
-        start = startDateTime.timestamp()
-        end = startDateTime.timestamp()
+        #start = startDateTime.timestamp()
+        #end = startDateTime.timestamp()
         
-        weibos = session.query(WeiboItem).filter(a_time>=start and a_time<=end).all()
+        weibos = self.session.query(WeiboItem).filter(WeiboItem.weibo_comment > 5000).all()
         for weibo in weibos:
-            weiboUser = session.query(WeiboUserItem).filter(user==weibo.user).one()
+            #weiboUser = session.query(WeiboUserItem).filter(user==weibo.user).one()
+            weiboUser = local.query(weibo.weibo_profile)
             ret.append([\
-                weibo.retweet, \
-                weibo.comment, \
-                weibo.vote, \
-                weiboUser.follow ] \
+                weibo.weibo_retweet, \
+                weibo.weibo_comment, \
+                weibo.weibo_vote, \
+                int(weiboUser[0][u"\u7c89\u4e1d"]) ] \
             )
         return ret
-    
+
+if __name__ == "__main__":
+    dataHelper = DataHelper()
+    print dataHelper.QueryWeiboInfoByTime(datetime.now, datetime.now)
+

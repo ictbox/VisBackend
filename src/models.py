@@ -10,35 +10,20 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-class WeixinTask(Base):
-    __tablename__ = 'wexin_task'
+class WeiboItem(Base):
+    __tablename__ = 'weibo'
 
-    query = Column(String(50), primary_key=True)
-    date = Column(String(10), primary_key=True)
-    begin_time = Column(Integer)
-    end_time = Column(Integer)
-
-class WeixinArticle(Base):
-    __tablename__ = 'weixin'
-
-
-    sogou_url =  Column(String(250), primary_key=True)
-
-    sogou_time = Column(String(10), primary_key=True)
-    sogou_title = Column(Text)
-    sogou_author = Column(String(100), primary_key=True)
-
-    sogou_desc = Column(String(250))
-
-    weixin_html = Column(LONGTEXT)
-    weixin_title = Column(String(250))
-    weixin_gzh = Column(String(100))
-    wexin_author = Column(String(250))    
-    wexin_time = Column(Integer)
-
-    # weixin_like = Column(Integer)
-    # weixin_read = Column(Integer)
-    # weixin_comment = Column(Integer) 
+    weibo_author = Column(String(255))
+    weibo_profile = Column(String(255))
+    weibo_content = Column(String(255))
+    weibo_dom = Column(String(255))
+    weibo_time = Column(String(255))
+    weibo_url = Column(String(255), primary_key=True)
+    weibo_device = Column(String(255))
+    weibo_retweet = Column(Integer)
+    weibo_comment = Column(Integer)
+    weibo_vote = Column(Integer)
+    
 
 class WeixinTask(Base):
     __tablename__ = 'wexin_task'
@@ -69,7 +54,6 @@ class WeixinArticle(Base):
     # weixin_like = Column(Integer)
     # weixin_read = Column(Integer)
     # weixin_comment = Column(Integer) 
-
 
 class ZhihuQuestionTask(Base):
     __tablename__ = 'zhihu_question_task'
