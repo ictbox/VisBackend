@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
 from datetime import datetime
-
+import numpy as np
 from models import *
 import json
 
@@ -15,7 +15,7 @@ class LocalData():
     def __init__(self):
         with open('weibo_user.json', 'r') as f:
             self.weibo_user = json.load(f)
-    
+
     def query(self, user):
         return filter(lambda x:x['url'] == user, self.weibo_user)
 
@@ -49,7 +49,7 @@ class DataHelper():
         ret = []
         #start = startDateTime.timestamp()
         #end = startDateTime.timestamp()
-        
+
         weibos = self.session.query(WeiboItem).filter(WeiboItem.weibo_comment > 5000).all()
         for weibo in weibos:
             #weiboUser = session.query(WeiboUserItem).filter(user==weibo.user).one()
@@ -62,7 +62,50 @@ class DataHelper():
             )
         return ret
 
+
+
+    def getRandomfeatures(self):
+        '''
+        get random features
+        :return:
+            '''
+        features=[]
+        for i in range(0,62):
+            features.append(np.random.randint(0,100,size=[100,9]))
+        return features
+
+    def getRandomArticlesTopic(self):
+        '''
+        get random article topic
+        :return:
+        '''
+        articlesTopic =[]
+        for  i in range(0,62):
+            articlesTopic.append(np.random.random((100,10)))
+        return  articlesTopic
+
+    def getRandomArticleFans(self):
+        '''
+        get random article fans
+        :return:
+        '''
+        articlesFans=[]
+        for i in range(0,62):
+            articlesFans.append(np.random.normal(100,10,100))#mean sigma size
+        return articlesFans
+
+    def getRandomArticlesAOI(self):
+        '''
+        get random article AOI
+        :return:
+        '''
+        articlesLocalVoice=[]
+        for i in range(0,62):
+            articlesLocalVoice.append(np.random.normal(1000,10,100))#mean sigma size
+        return articlesLocalVoice
+
+
+
 if __name__ == "__main__":
     dataHelper = DataHelper()
-    print dataHelper.QueryWeiboInfoByTime(datetime.now, datetime.now)
-
+    print (dataHelper.QueryWeiboInfoByTime(datetime.now, datetime.now))
