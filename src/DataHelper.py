@@ -71,7 +71,7 @@ class DataHelper():
             '''
         features=[]
         for i in range(0,62):
-            features.append(np.random.randint(0,100,size=[100,9]))
+            features.append(np.random.randint(0,100,size=[100,8]))
         return features
 
     def getRandomArticlesTopic(self):
@@ -83,6 +83,8 @@ class DataHelper():
         for  i in range(0,62):
             articlesTopic.append(np.random.random((100,10)))
         return  articlesTopic
+
+
 
     def getRandomArticleFans(self):
         '''
@@ -103,6 +105,7 @@ class DataHelper():
         for i in range(0,62):
             articlesLocalVoice.append(np.random.normal(1000,10,100))#mean sigma size
         return articlesLocalVoice
+
 
 
 

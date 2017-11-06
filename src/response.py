@@ -11,7 +11,7 @@ voice = VoiceMeasure()
 def compute():
     #data_string=request.get_data()
     #dict=json.loads(data_string)
-    voiceParameter = np.random.randint(0,10,(9))
+    voiceParameter = np.random.randint(0,10,(6))
     return voice.computeVoiceWithFeatures(voiceParameter)
 
 
